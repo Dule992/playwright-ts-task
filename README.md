@@ -25,6 +25,23 @@ To set up the project, follow these steps:
 ```sh
  npm install
 ```
+3. **Running tests**:
+
+- running all tests in headless mode with Chrome, Firefox, Webkit browser
+```sh
+npm run test:run:all:headless
+```
+
+- running in debug UI mode
+
+```sh
+npm run test:run:ui
+```
+
+4. **Test Report**:
+
+- you can find the report after execution of tests in the reports folder 
+- if it is running on [Github Actions](https://github.com/Dule992/playwright-ts-task/actions/workflows/playwright.yml) under artifacts section
 
 ### ✨ Contributing
 
