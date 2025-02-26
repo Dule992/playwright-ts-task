@@ -1,8 +1,7 @@
-import { Page, selectors } from "@playwright/test";
+import { Locator, Page, selectors } from "@playwright/test";
 
 export abstract class BasePage {
     protected page: Page;
-    
 
     constructor(page: Page) {
         this.page = page;
@@ -17,11 +16,15 @@ export abstract class BasePage {
         return this.page.url();
     }
 
-    async clickButton(locator: string) {
-        await this.page.click(locator);
+    async clickButton(locator: Locator) {
+        await locator.click();
     }
 
     async getText(locator: string) {
         await this.page.textContent(locator);
+    }
+
+    async isCookieBannerVisible(): Promise<boolean> {
+        return await this.page.getByRole('dialog').isVisible();
     }
 }

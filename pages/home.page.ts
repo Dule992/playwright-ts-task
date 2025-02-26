@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { Page } from '@playwright/test';
 import { BasePage } from './base.page';
 export class HomePage extends BasePage {
 
@@ -6,13 +6,12 @@ export class HomePage extends BasePage {
         super(page);
     }
 
-    
     locators = {
-        title: (text:string) => {return this.page.getByRole('heading', { name: text})},
+        title: (text:string) => {return this.page.getByRole('heading', { name: text })},
+        cookiesAllowAllButton: () => this.page.getByRole('button', {name: "Allow all"}),
     };
 
-    async assertTitle(text:string) {
-        expect(this.locators.title(text)).toBeVisible()
+    async assertTitle(text:string): Promise<boolean> {
+        return await this.locators.title(text).isVisible();
     }
-
 }
