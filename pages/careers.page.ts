@@ -36,9 +36,9 @@ export class CareersPage extends BasePage {
         return await this.locators.activeFilterButton()
             .filter({ hasText: filterName })
             .isVisible();
-        }
+    }
 
-    async isCardsOfPositionVisible(): Promise<boolean> { 
+    async isCardsOfPositionVisible(): Promise<boolean> {
         return await (this.locators.cardFeed()).isVisible();
     }
 
@@ -54,8 +54,10 @@ export class CareersPage extends BasePage {
     }
 
     async getPositionsTitles() {
-        while(await this.locators.loadMoreButton().isVisible()) {
-            await this.locators.loadMoreButton().click();
+        while (await this.locators.loadMoreButton().isVisible()) {
+            if (await this.locators.loadMoreButton().isVisible()) {
+                await this.locators.loadMoreButton().click();
+            }
         }
         const positions = await this.locators.positionsTitle();
         return positions;
