@@ -1,6 +1,5 @@
 import { Page } from '@playwright/test';
 import { BasePage } from './base.page';
-import { lstat } from 'fs';
 export class CareersPage extends BasePage {
 
     constructor(public readonly page: Page) {
@@ -40,7 +39,7 @@ export class CareersPage extends BasePage {
     }
 
     async isCardsOfPositionVisible(): Promise<boolean> {
-        return await (this.locators.cardFeed()).isVisible();
+        return await (this.locators.cardFeed().first()).isVisible();
     }
 
     async assertTeamName(position: string, teamName: string): Promise<void> {
@@ -55,9 +54,9 @@ export class CareersPage extends BasePage {
     }
 
     async getPositionsTitles() {
-        const positions = await this.locators.positionsTitle();
         const texts: string[] = [];
-        await this.clickShowMoreUntilEnd()
+        await this.clickLoadMoreUntilEnd()
+        const positions = await this.locators.positionsTitle();
         for (const locator of positions) {
             const text = await locator.textContent();
             if (text) {
@@ -68,12 +67,12 @@ export class CareersPage extends BasePage {
         return texts;
     }
 
-    async clickShowMoreUntilEnd() {
+    async clickLoadMoreUntilEnd() {
         while (true) {
             // Check if the "Show More" button exists and is visible
             const positionsTitles = await this.locators.positionsTitle();
-            const showMoreButton = this.locators.loadMoreButton();
-            const isVisible = await showMoreButton.isVisible();
+            const loadMoreButton = this.locators.loadMoreButton();
+            const isVisible = await loadMoreButton.isVisible();
     
             if (!isVisible) {
                 console.log("No more 'Show More' button found, stopping.");
@@ -81,11 +80,11 @@ export class CareersPage extends BasePage {
             }
     
             // Scroll into view and click the button
-            await showMoreButton.scrollIntoViewIfNeeded();
-            await showMoreButton.click();
+            await loadMoreButton.scrollIntoViewIfNeeded();
+            await loadMoreButton.click();
     
             // Wait for new elements to appear
-            await this.page.waitForTimeout(1000); // Can be replaced with a more dynamic wait
+            await this.page.waitForTimeout(1000);
             (positionsTitles[positionsTitles.length-1].waitFor({ state: 'attached' }));
     
             console.log("Clicked 'Show More' and loaded more items.");
