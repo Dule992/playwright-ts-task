@@ -25,6 +25,11 @@ To set up the project, follow these steps:
 ```sh
  npm install
 ```
+
+```sh
+npx playwright install
+```
+ 
 3. **Running tests**:
 
 - running all tests in headless mode with Chrome, Firefox, Webkit browser
