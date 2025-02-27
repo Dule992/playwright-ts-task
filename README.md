@@ -23,7 +23,7 @@ To set up the project, follow these steps:
 2. **Install dependencies** :
 
 ```sh
- npm install
+npm install
 ```
 
 ```sh
